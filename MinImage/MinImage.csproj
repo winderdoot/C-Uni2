@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<BaseOutputPath>$(SolutionDir)</BaseOutputPath>
+		<Platforms>AnyCPU;x64</Platforms>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
+		<!-- <PackageReference Include="Microsoft.VisualStudio.Utilities" Version="17.12.40391" /> -->
+		
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="CircularBuffer.cs" />
+		<Compile Include="CommandInfo.cs" />
+		<Compile Include="CommandParser.cs" />
+		<Compile Include="CommandRunner.cs" />
+		<Compile Include="ConsoleManager.cs" />
+		<Compile Include="LowLevelClear.cs" />
+		<Compile Include="MusicPlayer.cs" />
+		<Compile Include="Program.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="help_command\help_general.txt" />
+		<EmbeddedResource Include="help_command\help_unimplemented.txt" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\ImageGenerator\ImageGenerator.vcxproj" />
+	</ItemGroup>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<!-- path to dll, path to InteroperabilityCsharp's wroking dir -->
+		<Copy SourceFiles="$(SolutionDir)$(Platform)\$(Configuration)\ImageGenerator.dll" DestinationFolder="$(OutputPath)" />
+	</Target>
+</Project>

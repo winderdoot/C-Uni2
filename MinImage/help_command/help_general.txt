@@ -1,0 +1,62 @@
+:MinImage Generator v 2.11.03.07 (by Krzysztof Radzewicz)
+:
+:	general syntax: <generating command> [| <processing command>]
+:	other commands: <command> (no arguments...)
+:	help command:   help [<name of a command>]
+:	NOTE: the program support command history via arrow keys and lets the user modify commands
+:		  saved in the history. However DotNet doesn't easily allow clearing the entire console
+:		  history so it's kind of buggy :(. Ctrl + L to clear the console.
+:		  Also note the 'home' directory. That's where files are saved and loaded from.
+:		  I lacked the time to implement file system navigation, listing directories ect.
+:
+:   I. Generating commands:
+:		noisy <n> <p> <width> <height>
+:			=> Begin a processing query by generating n images sized width x height with a 
+:			   technique adjacent to perlin noise that I don't remember the name of.
+:			   <p> is the number of pivot points, that the technique uses. More points,
+:			   result in brighter images.
+:		wosy <n> <p> <width> <height>
+:			=> Modified version of noisy that's crazier. Using less pivot points is recomended.
+:		dirsey <n> <p> <width> <height>
+:			=> Another, further modified version of noisy. This time the pivot points also have
+:			   generated unit vectors, and each color channel is determined by the vector dot product
+:			   of that vector with the vector from the nearest point.
+:		generate <n> <width> <height>
+:			=> Begin a processing query by generating n images sized width x height
+:		input <filename1> [<filename2> ...]
+:			=> Begin a processing query by loading images from the specified paths (absolute paths)
+:
+:  II. Processing commands:
+:		noicross <p> <monochromatic>
+:			=> Really cool cross product filter that's based on the previous random point sampling of 'noisy'.
+:			   The output color is roughly the cross product of a given pixel's color and that of the closest pixel,
+:			   from the random pivot selection (<p> many points). <monochromatic> must be set to true or false.
+:			   Choose <p> = 1 for a cool surface light filter.
+:		pcross <x1> <y1>
+:			=> Different cross product filter that uses the point with coordinates <x1>, <y1>. 
+:		output <filepath>
+:			=> Saves each image from the processing query as a file <filepath>_<ind>
+:			   where ind is the index of the image. The filename must include a viable extension type.
+:			   Filepath is relative to the home directory.
+:		blur <w> <h>
+:			=> apply a w x h blur
+: 		randcir <n> <r>
+:			=> Adds n circles of radius r placed randomly on the images
+:		room <x1> <y1> <x2> <y2>
+:			=> Draws a filled rectangle with the given coordinates. 
+:			   (x1,y1) - left top corner, (x2,y2) - right bottom corner.
+:			   The coordinates are normalized to the size of the image (range from 0 to 1)
+:		colorcor <red> <green> <blue>
+:			=> Applies color correction, by boosting the specified color value. 
+:			   The values <red> <green> <blue> must be floats in range [0,1]
+:		gamma <gamma>
+:			=> Applies gamma correction
+:		Unfortunately I had no time left to implement my own processing commands
+:		however, with the overly complicated code base I made little would have to be done to
+:		implement them.
+:
+: III. Other commands:
+:		help => display help information
+:		music => relax after a long day of grading student assignments
+:		exit => exit the app
+ 
